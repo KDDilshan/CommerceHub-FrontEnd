@@ -15,8 +15,25 @@ export const searchProducts = async (description) => {
   return res.data;
 };
 
-export const createProduct = async (productData) => {
-  const res = await API.post(`/product/v1/create`, productData);
+export const createProduct = async (productData, image) => {
+  const formData = new FormData();
+
+  const productPayload = {
+    ...productData,
+    category: { id: parseInt(productData.category) }
+  };
+
+  formData.append('product', JSON.stringify(productPayload));
+  if (image) {
+    formData.append('image', image);
+  }
+
+  const res = await API.post(`/product/v1/create`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+
   return res.data;
 };
 
