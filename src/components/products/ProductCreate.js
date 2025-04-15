@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createProduct, uploadProductImage } from '../../services/productService';
+import { createProduct } from './../../services/productService'; 
 
 const ProductCreate = () => {
   const [productData, setProductData] = useState({
@@ -40,17 +40,7 @@ const ProductCreate = () => {
     setError('');
   
     try {
-      const productPayload = {
-        ...productData,
-        category: { id: parseInt(productData.category) } // Only wrap here
-      };
-  
-      const newProduct = await createProduct(productPayload);
-  
-      if (image && newProduct.id) {
-        await uploadProductImage(newProduct.id, image);
-      }
-  
+      const newProduct = await createProduct(productData, image);
       navigate(`/products/${newProduct.id}`);
     } catch (err) {
       setError('Failed to create product. Please try again.');
