@@ -60,6 +60,19 @@ export const registerAdmin = async (userData) => {
   }
 };
 
+export const getUserProfile = async () => {
+  try {
+    const response = await API.get('auth/api/user/profile', {
+      responseType: 'json',
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    throw error.response?.data || { error: 'Failed to load user profile' };
+  }
+};
+
 export const logout = async () => {
   try {
     await API.post('/auth/api/Logout');
