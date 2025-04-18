@@ -9,6 +9,8 @@ import ProductList from './components/products/ProductList';
 import ProductDetail from './components/products/ProductDetail';
 import ProductCreate from './components/products/ProductCreate';
 import ProductEdit from './components/products/ProductEdit';
+import UserProfile from './components/products/UserProfile';
+import EditProfile from './components/products/EditProfile'; // Import the UserProfile component
 import Home from './components/home';
 
 // Protected route component
@@ -21,18 +23,6 @@ const ProtectedRoute = ({ children }) => {
   
   return children;
 };
-
-// Admin route component
-// const AdminRoute = ({ children }) => {
-//   const user = JSON.parse(localStorage.getItem('user'));
-//   const isAdmin = user && user.role === 'ADMIN';
-  
-//   if (!isAdmin) {
-//     return <Navigate to="/" />;
-//   }
-  
-//   return children;
-// };
 
 function App() {
   return (
@@ -64,6 +54,26 @@ function App() {
                 </ProtectedRoute>
               } 
             />
+            
+            {/* Add the profile route */}
+            <Route 
+              path="/profile" 
+              element={
+                <ProtectedRoute>
+                  <UserProfile />
+                </ProtectedRoute>
+              } 
+            />
+
+            <Route 
+              path="/profile/edit" 
+              element={
+                <ProtectedRoute>
+                  <EditProfile />
+                </ProtectedRoute>
+              } 
+            />
+            
             {/* Add other routes as needed */}
           </Routes>
         </main>
